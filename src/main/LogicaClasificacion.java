@@ -15,7 +15,18 @@ public class LogicaClasificacion {
      *         Salida: "odnuM aloH"
      */
     public String invertirCadena(String texto) {
-        return "";
+    
+        Stack<Character> pila = new Stack<>();
+        for (char c : texto.toCharArray()) {
+            pila.push(c);
+        }
+        StringBuilder invertido = new StringBuilder();
+        while (!pila.isEmpty()) {
+            invertido.append(pila.pop());
+        }
+         return invertido.toString();
+
+
     }
 
     /**
@@ -29,9 +40,27 @@ public class LogicaClasificacion {
      *         Entrada: "{[()]}"
      *         Salida: true
      */
-    public boolean validarSimbolos(String expresion) {
-        return false;
+public boolean validarSimbolos(String expresion) {
+    Stack<Character> pila = new Stack<>();
+    Map<Character, Character> mapa = Map.of(
+        ')', '(', 
+        '}', '{', 
+        ']', '['
+    );
+
+    for (char c : expresion.toCharArray()) {
+        if (mapa.containsValue(c)) {
+            pila.push(c); 
+        } else if (mapa.containsKey(c)) {
+            if (pila.isEmpty() || pila.pop() != mapa.get(c)) {
+                return false; 
+            }
+        }
     }
+
+    return pila.isEmpty(); 
+}
+  
 
     /**
      * Ordena una pila de enteros en orden ascendente usando otra pila auxiliar.
@@ -43,8 +72,20 @@ public class LogicaClasificacion {
      *         Salida: [1, 2, 3, 4]
      */
     public List<Integer> ordenarPila(Stack<Integer> pila) {
-
-        return new ArrayList<>();
+        Stack<Integer> aux = new Stack<>();
+        
+        while (!pila.isEmpty()) {
+            int temp= pila.pop();
+        while(!aux.isEmpty() && aux.peek()<temp ){
+            pila.push(aux.pop());
+        }
+        aux.push(temp);
+        }
+        List<Integer> ordenada = new ArrayList<>();
+        while (!aux.isEmpty()) {
+            ordenada.add(aux.pop());
+        }
+        return ordenada;
     }
 
     /**
@@ -58,7 +99,21 @@ public class LogicaClasificacion {
      *         Salida: [2, 4, 6, 1, 3, 5]
      */
     public List<Integer> clasificarPorParidad(LinkedList<Integer> original) {
+        List<Integer> pares = new ArrayList<>();
+        List<Integer> impares = new ArrayList<>();
+        for (int num : original){
+            if(num %2==0){
+                pares.add(num);
 
-        return new ArrayList<>();
+            }else{
+                impares.add(num);
+
+            }
+        } 
+    pares.addAll(impares);
+    return pares;
     }
-}
+ }
+
+    
+
