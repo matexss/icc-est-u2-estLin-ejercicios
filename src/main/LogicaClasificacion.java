@@ -76,7 +76,7 @@ public boolean validarSimbolos(String expresion) {
         
         while (!pila.isEmpty()) {
             int temp= pila.pop();
-        while(!aux.isEmpty() && aux.peek()>temp ){
+        while(!aux.isEmpty() && aux.peek()< temp ){
             pila.push(aux.pop());
         }
         aux.push(temp);
